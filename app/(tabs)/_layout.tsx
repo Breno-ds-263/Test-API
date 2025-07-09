@@ -1,43 +1,72 @@
+import { Colors } from '@/constants/Colors';
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
 
-import { HapticTab } from '@/components/HapticTab';
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
+import {
+  Code,
+  CodeSimple,
+  House,
+  HouseLine,
+  MapPinLine,
+  MapTrifold,
+  User,
+  UserCircle,
+} from 'phosphor-react-native';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors.tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Início',
+          tabBarIcon: ({ color, focused }) =>
+            focused ? (
+              <House weight="fill" color={color} size={24} />
+            ) : (
+              <HouseLine weight="regular" color={color} size={24} />
+            ),
+        }}
+      />
+      <Tabs.Screen
+        name="map"
+        options={{
+          title: 'Mapa',
+          tabBarIcon: ({ color, focused }) =>
+            focused ? (
+              <MapTrifold weight="fill" color={color} size={24} />
+            ) : (
+              <MapPinLine weight="regular" color={color} size={24} />
+            ),
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Explorar',
+          tabBarIcon: ({ color, focused }) =>
+            focused ? (
+              <Code weight="fill" color={color} size={24} />
+            ) : (
+              <CodeSimple weight="regular" color={color} size={24} />
+            ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          title: 'Perfil',
+          tabBarIcon: ({ color, focused }) =>
+            focused ? (
+              <User weight="fill" color={color} size={24} />
+            ) : (
+              <UserCircle weight="regular" color={color} size={24} />
+            ),
         }}
       />
     </Tabs>
